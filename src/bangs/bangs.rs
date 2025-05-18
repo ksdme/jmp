@@ -39,25 +39,28 @@ fn interpolate_bang(destination: &str, query: &str) -> String {
 }
 
 // Returns the interpolated destination of a bang.
-pub fn resolve_bang(config: crate::conf::Config, shorthand: &str, query: &str) -> Option<String> {
+pub fn resolve_bang(config: &crate::conf::Config, query: &str) -> Option<String> {
+    // Split the query into a shorthand and a search query. But leave the search
+    // query as is.
+    let (shorthand, search) = query.split_once(" ")?;
     let shorthand = shorthand.to_lowercase();
 
     // Figure out the exact match first.
     for bang in custom_bangs(&config.bangs.custom).iter() {
         if bang.shorthand.to_lowercase() == shorthand {
-            return Some(interpolate_bang(&bang.destination, query));
+            return Some(interpolate_bang(&bang.destination, search));
         }
     }
 
     if config.bangs.duckduckgo {
         for bang in DUCKDUCKGO_BANGS.iter() {
             if bang.shorthand.to_lowercase() == shorthand {
-                return Some(interpolate_bang(&bang.destination, query));
+                return Some(interpolate_bang(&bang.destination, search));
             }
         }
     }
 
-    return None;
+    None
 }
 
 #[cfg(test)]
@@ -90,7 +93,7 @@ mod tests {
         let config = create_test_config(custom, false);
 
         assert_eq!(
-            resolve_bang(config, "gh", "rust-lang/rust"),
+            resolve_bang(&config, "gh rust-lang/rust"),
             Some("https://github.com/search?q=rust-lang/rust".to_string())
         );
     }
@@ -106,7 +109,7 @@ mod tests {
         let config = create_test_config(custom, false);
 
         assert_eq!(
-            resolve_bang(config, "yt", "rust programming"),
+            resolve_bang(&config, "yt rust programming"),
             Some("https://youtube.com/results?search_query=rust programming".to_string())
         );
     }
@@ -116,14 +119,14 @@ mod tests {
         let config = create_test_config(HashMap::new(), false);
 
         // This should return None even if the bang exists in DuckDuckGo's list
-        assert_eq!(resolve_bang(config, "w", "rust"), None);
+        assert_eq!(resolve_bang(&config, "w rust"), None);
     }
 
     #[test]
     fn test_nonexistent_bang() {
         let config = create_test_config(HashMap::new(), true);
 
-        assert_eq!(resolve_bang(config, "nonexistent", "query"), None);
+        assert_eq!(resolve_bang(&config, "nonexistent rust"), None);
     }
 
     #[test]
@@ -131,7 +134,7 @@ mod tests {
         let config = create_test_config(HashMap::new(), true);
 
         // Test with a known DuckDuckGo bang (rust - Rust stdlib docs)
-        let result = resolve_bang(config, "rust", "Vec");
+        let result = resolve_bang(&config, "rust rust-lang/rust");
         assert!(
             result.is_some(),
             "DuckDuckGo bang 'rust' should resolve when enabled"

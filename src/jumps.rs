@@ -1,12 +1,10 @@
 // Resolves a jump using the config.
-pub fn resolve_jump(config: crate::conf::Config, query: &str) -> Option<String> {
-    // Collect the parts.
-    let q_normalized = query.trim().to_lowercase();
-    let q_parts: Vec<&str> = q_normalized.split_whitespace().collect();
+pub fn resolve_jump(config: &crate::conf::Config, query: &str) -> Option<String> {
+    let q_parts: Vec<&str> = query.split_whitespace().collect();
 
     // Find matching shorthand.
     for (shorthand, destination) in config.jumps.urls.iter() {
-        let s_normalized = shorthand.trim().to_lowercase();
+        let s_normalized = shorthand.trim();
         let s_parts: Vec<&str> = s_normalized.split_whitespace().collect();
 
         // Check if query starts with the shorthand
@@ -15,7 +13,7 @@ pub fn resolve_jump(config: crate::conf::Config, query: &str) -> Option<String> 
                 .iter()
                 .take(s_parts.len())
                 .zip(s_parts.iter())
-                .all(|(a, b)| *a == *b);
+                .all(|(a, b)| a.to_lowercase() == *b);
 
             if matches {
                 // Get remaining arguments after the shorthand match
@@ -70,23 +68,23 @@ mod tests {
 
         // Test full shorthand match with template
         assert_eq!(
-            resolve_jump(config.clone(), "gh repo rust-lang/rust"),
+            resolve_jump(&config, "gh repo rust-lang/rust"),
             Some("https://github.com/rust-lang/rust".to_string())
         );
 
         // Test case insensitive match
         assert_eq!(
-            resolve_jump(config.clone(), "GH REPO example"),
+            resolve_jump(&config, "GH REPO example"),
             Some("https://github.com/example".to_string())
         );
 
         // Test single word shorthand
         assert_eq!(
-            resolve_jump(config.clone(), "google rust programming"),
+            resolve_jump(&config, "google rust programming"),
             Some("https://google.com/search?q=rust".to_string())
         );
 
         // Test no match
-        assert_eq!(resolve_jump(config, "unknown command"), None);
+        assert_eq!(resolve_jump(&config, "unknown command"), None);
     }
 }
