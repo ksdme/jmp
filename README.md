@@ -3,7 +3,7 @@
 local, lightweight [duckduckgo bangs](https://duckduckgo.com/bangs) and [golinks](https://www.golinks.io/) for every browser.
 
 
-<video src="https://raw.githubusercontent.com/ksdme/jmp/refs/heads/main/assets/demo.mp4" width="100%" height="auto" muted></video>
+<video src="https://github.com/user-attachments/assets/7723d165-9da2-427d-9ce8-104d883eab3d" width="100%" height="auto" muted></video>
 
 
 ### Features
