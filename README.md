@@ -2,6 +2,10 @@
 
 local, lightweight [duckduckgo bangs](https://duckduckgo.com/bangs) and [golinks](https://www.golinks.io/) for every browser.
 
+
+<video src="./assets/demo.mp4"></video>
+
+
 ### Features
 
 Imagine, for example,
