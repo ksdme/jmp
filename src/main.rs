@@ -2,6 +2,8 @@ mod bangs;
 mod conf;
 mod jumps;
 
+use std::fs;
+
 use axum::{
     extract::{Query, State},
     response::{IntoResponse, Redirect, Response},
@@ -10,25 +12,35 @@ use serde::Deserialize;
 use tower_http::trace::TraceLayer;
 use tracing_subscriber::EnvFilter;
 
+use clap::Parser;
+
+#[derive(Parser)]
+#[command(author, version, about)]
+struct Args {
+    /// Path to the config file.
+    #[arg(long, default_value = "jmp.toml")]
+    config: String,
+
+    /// Address to bind the server to.
+    #[arg(long, default_value = "127.0.0.1:62754")]
+    bind: String,
+
+    /// Log level to use.
+    #[arg(long, default_value = "info")]
+    log_level: String,
+}
+
 #[tokio::main]
 async fn main() {
+    let args = Args::parse();
+
     tracing_subscriber::fmt()
-        .with_env_filter(EnvFilter::from_default_env())
+        .with_env_filter(EnvFilter::new(args.log_level))
         .init();
 
-    // Example usage
-    let config_str = r#"
-[bangs.custom]
-gh = "https://github.com/search?q={{{s}}}"
-
-[jumps]
-enabled = true
-
-[jumps.urls]
-github = "https://github.com"
-rust = "https://rust-lang.org/{{{1}}}/{{{2}}}"
-"#;
-    let config = conf::Config::from_str(config_str).unwrap();
+    // Set up config file.
+    let config = fs::read_to_string(args.config).expect("could not read config file");
+    let config = conf::Config::from_str(&config).expect("could not parse config file");
 
     // Set up the handler.
     let app = axum::Router::new()
@@ -36,10 +48,11 @@ rust = "https://rust-lang.org/{{{1}}}/{{{2}}}"
         .with_state(config)
         .layer(TraceLayer::new_for_http());
 
-    // Run the app
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000")
+    // Run the app.
+    tracing::info!("starting server on {}", args.bind);
+    let listener = tokio::net::TcpListener::bind(args.bind)
         .await
-        .expect("could not bind to port");
+        .expect("could not bind to address");
     axum::serve(listener, app).await.unwrap();
 }
 

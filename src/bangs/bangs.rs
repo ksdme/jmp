@@ -10,16 +10,12 @@ struct Bang {
 
     #[serde(rename = "u")]
     destination: String,
-
-    #[serde(rename = "s")]
-    service: String,
 }
 
 // Load all the duckduckgo bangs from the stored file.
 static DUCKDUCKGO_BANGS: Lazy<Vec<Bang>> = Lazy::new(|| {
     let bangs = include_str!("duckduckgo.json");
-
-    serde_json::from_str(&bangs).expect("bangs list should be parseable")
+    serde_json::from_str(&bangs).expect("could not parse duckduckgo bangs")
 });
 
 // Returns a list of custom bangs.
@@ -27,7 +23,6 @@ fn custom_bangs(bangs: &HashMap<String, String>) -> Vec<Bang> {
     bangs
         .iter()
         .map(|(shorthand, destination)| Bang {
-            service: "custom".to_string(),
             shorthand: shorthand.to_string(),
             destination: destination.to_string(),
         })

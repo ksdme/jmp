@@ -1,4 +1,5 @@
 // Resolves a jump using the config.
+// TODO: Sort for the longest match first.
 pub fn resolve_jump(config: &crate::conf::Config, query: &str) -> Option<String> {
     let q_parts: Vec<&str> = query.split_whitespace().collect();
 
