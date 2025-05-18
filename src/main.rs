@@ -7,9 +7,15 @@ use axum::{
     response::{IntoResponse, Redirect, Response},
 };
 use serde::Deserialize;
+use tower_http::trace::TraceLayer;
+use tracing_subscriber::EnvFilter;
 
 #[tokio::main]
 async fn main() {
+    tracing_subscriber::fmt()
+        .with_env_filter(EnvFilter::from_default_env())
+        .init();
+
     // Example usage
     let config_str = r#"
 [bangs.custom]
@@ -27,10 +33,13 @@ rust = "https://rust-lang.org/{{{1}}}/{{{2}}}"
     // Set up the handler.
     let app = axum::Router::new()
         .route("/", axum::routing::get(jmp))
-        .with_state(config);
+        .with_state(config)
+        .layer(TraceLayer::new_for_http());
 
     // Run the app
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000")
+        .await
+        .expect("could not bind to port");
     axum::serve(listener, app).await.unwrap();
 }
 
