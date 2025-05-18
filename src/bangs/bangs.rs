@@ -73,6 +73,7 @@ mod tests {
         duckduckgo_enabled: bool,
     ) -> Config {
         Config {
+            fallback_search: Default::default(),
             bangs: Bangs {
                 enabled: true,
                 duckduckgo: duckduckgo_enabled,

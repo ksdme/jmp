@@ -4,11 +4,19 @@ use std::collections::HashMap;
 // The definition of the config file.
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Config {
+    #[serde(default = "default_fallback_search")]
+    pub fallback_search: String,
+
     #[serde(default)]
     pub bangs: Bangs,
 
     #[serde(default)]
     pub jumps: Jumps,
+}
+
+// :)
+fn default_fallback_search() -> String {
+    "https://google.com/search?q={{{s}}}".to_string()
 }
 
 #[derive(Debug, Serialize, Deserialize, Default, Clone)]

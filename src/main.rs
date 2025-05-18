@@ -62,5 +62,7 @@ async fn jmp(State(config): State<conf::Config>, Query(params): Query<SearchPara
         }
     }
 
-    "nowhere to jmp".into_response()
+    // Fallback to the search engine.
+    let url = config.fallback_search.replace("{{{s}}}", q);
+    Redirect::temporary(&url).into_response()
 }

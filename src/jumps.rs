@@ -43,6 +43,7 @@ mod tests {
 
     fn create_test_config(urls: HashMap<String, String>) -> Config {
         Config {
+            fallback_search: Default::default(),
             bangs: Default::default(),
             jumps: Jumps {
                 enabled: true,
