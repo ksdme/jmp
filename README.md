@@ -2,9 +2,6 @@
 
 local, lightweight [duckduckgo bangs](https://duckduckgo.com/bangs) and [golinks](https://www.golinks.io/) for every browser.
 
-<video src="https://github.com/user-attachments/assets/81a51a82-0118-49c0-bb11-5e6412077139" width="100%" height="auto" muted></video>
-
-
 ### Features
 
 Imagine, for example,
@@ -12,6 +9,8 @@ Imagine, for example,
 - `!drs tokio` to search on docs.rs.
 - `go/gh foo` to go to github.com/yourusername/foo.
 - `go/w/cal` to go to your work calendar.
+
+<video src="https://github.com/user-attachments/assets/81a51a82-0118-49c0-bb11-5e6412077139" width="100%" height="auto" muted></video>
 
 ### How it works?
 
