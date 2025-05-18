@@ -2,8 +2,7 @@
 
 local, lightweight [duckduckgo bangs](https://duckduckgo.com/bangs) and [golinks](https://www.golinks.io/) for every browser.
 
-
-<video src="https://github.com/user-attachments/assets/7723d165-9da2-427d-9ce8-104d883eab3d" width="100%" height="auto" muted></video>
+<video src="https://github.com/user-attachments/assets/81a51a82-0118-49c0-bb11-5e6412077139" width="100%" height="auto" muted></video>
 
 
 ### Features
