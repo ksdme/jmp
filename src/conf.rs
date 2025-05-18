@@ -2,17 +2,17 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 // The definition of the config file.
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Config {
     #[serde(default)]
-    pub bangs: BangsConfig,
+    pub bangs: Bangs,
 
     #[serde(default)]
-    pub jumps: JumpsConfig,
+    pub jumps: Jumps,
 }
 
-#[derive(Debug, Serialize, Deserialize, Default)]
-pub struct BangsConfig {
+#[derive(Debug, Serialize, Deserialize, Default, Clone)]
+pub struct Bangs {
     #[serde(default = "default_true")]
     pub enabled: bool,
 
@@ -23,10 +23,13 @@ pub struct BangsConfig {
     pub custom: HashMap<String, String>,
 }
 
-#[derive(Debug, Serialize, Deserialize, Default)]
-pub struct JumpsConfig {
+#[derive(Debug, Serialize, Deserialize, Default, Clone)]
+pub struct Jumps {
     #[serde(default = "default_true")]
     pub enabled: bool,
+
+    #[serde(default = "default_prefix")]
+    pub prefix: String,
 
     #[serde(default)]
     pub urls: HashMap<String, String>,
@@ -34,6 +37,10 @@ pub struct JumpsConfig {
 
 fn default_true() -> bool {
     true
+}
+
+fn default_prefix() -> String {
+    "go".to_string()
 }
 
 impl Config {

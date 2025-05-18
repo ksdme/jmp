@@ -1,5 +1,6 @@
 mod bangs;
 mod conf;
+mod jumps;
 
 fn main() {
     // Example usage
