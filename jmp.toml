@@ -1,0 +1,33 @@
+# Example configuration.
+
+# The url that will be used if no bang or jump matches the query.
+# Use {{{s}}} as the placeholder for the search query.
+fallback_search = "https://google.com/search?q={{{s}}}"
+
+[bangs]
+enabled = true
+
+# If bangs that are shipped by duckduckgo should be available.
+# https://duckduckgo.com/bang.js
+duckduckgo = true
+
+# Your custom bangs. The key is the shorthand and the value is the destination url.
+# Use {{{s}}} as the placeholder for the search query.
+[bangs.custom]
+gh = "https://github.com/search?q={{{s}}}"
+
+# Jumps allow you to jump to a specific parameterizeable url with a shorthand.
+# For example, if configured, go/gh could redirect you to your github account,
+# or, go/gh foo could take you to a specific repository named foo.
+[jumps]
+enabled = true
+
+# The prefix for the jump command (excluding the slash).
+# For example, if it is go, then a gh jump can be accessed using go/gh.
+prefix = "go"
+
+# The urls that can be jumped to. The key is the shorthand and the value is the destination url.
+# The key can be multi word. Use {{{n}}} as the placeholder for the nth argument.
+[jumps.urls]
+gh = "https://github.com/"
+ghr = "https://github.com/me/{{{1}}}"
