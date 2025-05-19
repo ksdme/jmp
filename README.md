@@ -2,7 +2,7 @@
 
 local, lightweight [duckduckgo bangs](https://duckduckgo.com/bangs) and [golinks](https://www.golinks.io/) for every browser.
 
-<video src="https://github.com/user-attachments/assets/81a51a82-0118-49c0-bb11-5e6412077139" width="100%" height="auto" muted></video>
+<video src="https://github.com/user-attachments/assets/fbc4294e-bb07-457a-b83b-18ce42f2670a" width="100%" height="auto" muted></video>
 
 ## Features
 
@@ -39,7 +39,11 @@ This might not be straight forward on some browsers, for example, Firefox. You c
 
 ## Configuration
 
-You can configure jmp using a toml config file. You can use [jmp.toml](./jmp.toml) as a reference or
+You can configure jmp using a toml c
+
+https://github.com/user-attachments/assets/00374126-bd45-473b-a47a-03c3d65ad924
+
+onfig file. You can use [jmp.toml](./jmp.toml) as a reference or
 you can stare at [conf.rs](./src/conf.rs) for the details.
 
 ### Todo
