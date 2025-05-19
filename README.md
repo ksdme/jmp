@@ -35,3 +35,8 @@ This might not be straight forward on some browsers, for example, Firefox. You c
 
 You can configure jmp using a toml config file. You can use [jmp.toml](./jmp.toml) as a reference or
 you can stare at [conf.rs](./src/conf.rs) for the details.
+
+### Todo
+
+- Maybe make jump arguments more declarative.
+- There a bug where placeholders in jumps are not interpolated if they aren't used.
