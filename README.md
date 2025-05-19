@@ -39,11 +39,7 @@ This might not be straight forward on some browsers, for example, Firefox. You c
 
 ## Configuration
 
-You can configure jmp using a toml c
-
-https://github.com/user-attachments/assets/00374126-bd45-473b-a47a-03c3d65ad924
-
-onfig file. You can use [jmp.toml](./jmp.toml) as a reference or
+You can configure jmp using a toml config file. You can use [jmp.toml](./jmp.toml) as a reference or
 you can stare at [conf.rs](./src/conf.rs) for the details.
 
 ### Todo
