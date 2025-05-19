@@ -12,6 +12,12 @@ Imagine, for example,
 - `go/gh foo` to go to github.com/yourusername/foo.
 - `go/w/cal` to go to your work calendar.
 
+## Installation
+
+```
+cargo install --git https://github.com/ksdme/jmp
+```
+
 ## How it works?
 
 Well, you could build something like this as a browser extension. But, honestly, I know that to be an annoying
